@@ -1,0 +1,41 @@
+<TITLE> Moss</TITLE>
+<Center><H1> Moss: A Measure of Software Similarity</H1></Center>
+<hr>
+<h3> What is Moss?</h3> 
+Moss is an automatic system for determining
+the similarity of two C, C++, Java, or ML programs.  To date, the main
+application of Moss has been in detecting cheating in university programming
+classes.  Since its development two years ago, Moss has been very
+effective in this role and is a significant improvement over other
+cheating detection systems (at least, over those known to us).
+<hr>
+<h3>An Internet Service (beta test)</h3>
+Moss is now being provided as a free Internet service.
+The service has been designed to be very easy to use.  You
+supply a list of files to compare and Moss does the rest.<p>
+
+The Moss server responds to a query with a list of pairs of programs
+that have similar code.  Moss also tells you which passages in the two
+programs appear the same, making it easy to quickly compare the files
+by hand.  Finally, Moss can automatically eliminate matches to code
+that one expects to be shared (e.g., libraries or instructor-supplied
+code), thereby eliminating false positives that arise from legitimate
+sharing of code.
+<hr>
+<h3>Registering for Moss</h3>
+Moss is being provided in the hope that it will benefit the
+educational community; it is fast, easy to use, and free.  Access to
+Moss is currently restricted to instructors in programming courses.
+To obtain a Moss account, send a request to <a
+href=mailto:"moss-request@cs.berkeley.edu">moss-request@cs.berkeley.edu</a>.
+Processing requests for accounts may take up to a day; once you have
+an account queries are processed as soon as they are received.
+<hr>
+<h3> How Does it Work?</h3>
+Wouldn't you like to know!  While there is a big difference between a
+good cheating detection algorithm and a bad one, all such algorithms
+can be fooled if one knows how they work.  It's best if we don't say
+too much about the ideas behind Moss.  Suffice it to say that it is
+more sophisticated than systems based on counting the frequency of
+certain words in the program text (a widely used cheating-detection
+heuristic); Moss actually examines program structure.

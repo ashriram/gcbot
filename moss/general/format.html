@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+<TITLE> Reading the Results of Moss</TITLE>
+</HEAD>
+<BODY>
+<h2>Reading the Results</h2>
+
+<i> This page is out of date for the new version of moss (in beta
+during the summer of 2003).  More up to date information on the results
+page can be found on the <a href="../cap/index.html">CAP</a> pages.</i><p>
+
+The main (or index) page consists of a table of pairs of files that
+have similar code, sorted by the size of the code that is considered
+the same in both files.  The format of a table entry is
+<p>
+<TABLE>
+<TR><TH>File1<TH>File2<TH>TokensMatched<TH>LinesMatched
+</TABLE>
+<p>
+Tokens Matched is the number of tokens matched in the two files,
+which is the most accurate measure of the size of the match.  
+Lines Matched is approximately the number of lines of code that
+matched, which is a more intuitive but less reliable measure.  Each
+file is also given a percentage score, which is the 
+the percentage of the tokens in each file considered
+to match tokens in the other file.  For all three measures, higher
+numbers mean more code matches.
+<p>
+For each pair of matches there is a page with information on
+particular passages that match.  The window is divided into
+three frames: one for a table of all passages that matched, and
+one each for the source code of the two files.
+<p>
+The table of passages has the format
+<TABLE BORDER="1" CELLSPACING="0" BGCOLOR="#d0d0d0"><TR><TH><TH>filename1 (%)<TH>filename2 (%)<TH>Tokens
+<TR><TD BGCOLOR="#c00000"><FONT COLOR="#c00000">-</FONT><TD>88-99<TD>119-131<TD ALIGN=center>174</FONT>
+</TABLE>
+where each row gives a range of line numbers from file1 and file2 that are considered to be
+the same, along with the size of the passage in tokens.  The line range is a hyperlink to the
+appropriate passage in the corresponding program.  The passage has the
+color of the small rectangle at the left-hand edge of the row.  In addition, the passage
+has an associated <IMG SRC="target.gif">.  Clicking on this icon sets
+the focus in the other program frame to the matching passage.
+</BODY>
+</HTML>
+
