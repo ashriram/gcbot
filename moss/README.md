@@ -19,8 +19,8 @@ perlbrew switch perl-5.10.1
 Steps for creating moss directory using gitgud tool
 
 ```
-python3.6 ./git_gud.py clone -o=CMPT-431-SFU ass0-git-tutorial # clones all students
-python3.6 ./git_gud.py moss -o=CMPT-431-SFU ass0-git-tutorial # iterates over cloned folders and creates moss folder
+python3.6 ./gcassist.py clone -o=CMPT-431-SFU ass0-git-tutorial # clones all students
+python3.6 ./gcassist.py moss -o=CMPT-431-SFU ass0-git-tutorial # iterates over cloned folders and creates moss folder
 mv moss moss-ass0 # Sets up moss directory for next step
 ```
 

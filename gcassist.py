@@ -16,7 +16,7 @@ import json
 
 import argparse
 # Try to get it from system environment variable (On Linux/macOS you have to create it on $HOME/.bash_profile or .bashrc)
-_key = os.environ.get('GIT_GUD_TOKEN', None)
+_key = os.environ.get('GIT_TOKEN', None)
 _parent = os.environ.get('PARENT_REPO', None)
 _run_remote_password = ""
 # If you are not using environment variable, then try to get GITHUB TOKEN KEY from config.ini file.
@@ -35,7 +35,7 @@ if _key is None:
     if 'RUN_REMOTE_PASSWORD' in _config_parser['DEFAULT'].keys():
         _run_remote_password = _config_parser['DEFAULT']['RUN_REMOTE_PASSWORD']
 
-GIT_GUD_CONFIG = {
+GIT_CONFIG = {
     'key': _key,
     # Set name of owner and TAs,
     'owners': {
@@ -245,7 +245,7 @@ def add_commit_push_grading_sheet():
 
     project_dir = "{}/{}".format(os.getcwd(), project)
     repos = os.listdir(project_dir)
-    result = GIT_GUD_CONFIG['grading_file']
+    result = GIT_CONFIG['grading_file']
 
     for repo in repos:
         repo_dir = "{}/{}".format(project_dir, repo)
@@ -286,8 +286,8 @@ def add_commit_push(project, comment):
         - None
     '''
     if not comment:
-        passed = GIT_GUD_CONFIG['passed']
-        failed = GIT_GUD_CONFIG['failed']
+        passed = GIT_CONFIG['passed']
+        failed = GIT_CONFIG['failed']
 
     project_dir = "{}/{}".format(os.getcwd(), project)
     repos = os.listdir(project_dir)
@@ -304,7 +304,7 @@ def add_commit_push(project, comment):
                     result = passed
                 text = ""
             else:
-                result = GIT_GUD_CONFIG['grading_file']
+                result = GIT_CONFIG['grading_file']
                 print(f"\nGrading {repo} - enter grading comment:")
                 text = sys.stdin.read()
 
@@ -532,7 +532,7 @@ def list_matching(project, organization):
     Returns:
         - None
     '''
-    g = Github(GIT_GUD_CONFIG['key'])
+    g = Github(GIT_CONFIG['key'])
     for repo in g.get_user().get_repos():
         if is_matching(repo, project, organization):
             print(repo.name)
@@ -553,12 +553,12 @@ def set_matching_readonly(project, organization, push_or_pull):
     Returns:
         - None
     '''
-    g = Github(GIT_GUD_CONFIG['key'])
+    g = Github(GIT_CONFIG['key'])
     for repo in g.get_user().get_repos():
         if is_matching(repo, project, organization):
             print("Changing permissions for {}".format(repo.name))
             for collab in repo.get_collaborators():
-                if collab.login not in GIT_GUD_CONFIG['owners']:
+                if collab.login not in GIT_CONFIG['owners']:
                     # Student found. change permissions from push to pull
                     # repo.remove_from_collaborators(collab)
                     try:
@@ -588,12 +588,12 @@ def set_matching_remove(project, organization, push_or_pull):
     Returns:
         - None
     '''
-    g = Github(GIT_GUD_CONFIG['key'])
+    g = Github(GIT_CONFIG['key'])
     for repo in g.get_user().get_repos():
         if is_matching(repo, project, organization):
             print("Changing permissions for {}".format(repo.name))
             for collab in repo.get_collaborators():
-                if collab.login not in GIT_GUD_CONFIG['owners']:
+                if collab.login not in GIT_CONFIG['owners']:
                     # Student found. change permissions from push to pull
                     try:
                         repo.remove_from_collaborators(collab)
@@ -619,14 +619,14 @@ def clone_matching(project, organization):
         - None
     '''
     project_dir = "{}/{}".format(os.getcwd(), project)
-    g = Github(GIT_GUD_CONFIG['key'])
+    g = Github(GIT_CONFIG['key'])
     for repo in g.get_user().get_repos():
         if is_matching(repo, project, organization):
             if not os.path.isdir(project_dir):
                 os.mkdir(project_dir)
             split_idx = repo.clone_url.find("github.com")
             repo_url = "{}{}@{}".format(repo.clone_url[:split_idx],
-                                        GIT_GUD_CONFIG['key'],
+                                        GIT_CONFIG['key'],
                                         repo.clone_url[split_idx:])
             subprocess.run(["git", "clone", "--depth", "1", repo_url], cwd=project_dir)
 
@@ -642,12 +642,12 @@ def run_remote(project, organization):
         - None
     '''
     project_dir = "{}/{}".format(os.getcwd(), project)
-    g = Github(GIT_GUD_CONFIG['key'])
+    g = Github(GIT_CONFIG['key'])
     for repo in g.get_user().get_repos():
         if is_matching(repo, project, organization):
             print(repo.name)
             client_payload = {}
-            client_payload["password"] = GIT_GUD_CONFIG["run_remote_password"]
+            client_payload["password"] = GIT_CONFIG["run_remote_password"]
             repo.create_repository_dispatch("grading", client_payload)
 
 
@@ -662,7 +662,7 @@ def cancel_remote(project, organization):
         - None
     '''
     project_dir = "{}/{}".format(os.getcwd(), project)
-    g = Github(GIT_GUD_CONFIG['key'])
+    g = Github(GIT_CONFIG['key'])
     for repo in g.get_user().get_repos():
         if is_matching(repo, project, organization):
             runs = repo.get_workflow_runs()
@@ -683,7 +683,7 @@ def run_remote_status(project, organization):
         - None
     '''
     project_dir = "{}/{}".format(os.getcwd(), project)
-    g = Github(GIT_GUD_CONFIG['key'])
+    g = Github(GIT_CONFIG['key'])
     all_jobs = 0
     for repo in g.get_user().get_repos():
         if is_matching(repo, project, organization):
@@ -725,7 +725,7 @@ def force_remove_runners(organization):
         - None
     '''
 
-    auth_token = format(GIT_GUD_CONFIG['key'])
+    auth_token = format(GIT_CONFIG['key'])
     headers = {
     'accept': 'application/vnd.github.everest-preview+json',
     'authorization': f'token {auth_token}',
